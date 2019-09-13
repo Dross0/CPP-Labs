@@ -41,6 +41,8 @@ private:
     unsigned int word_amount_;
     std::map<std::string, unsigned int> table_;
 
+    WordCounter(WordCounter const & w){}
+
     void count(std::list<std::string> list_of_strings_){
         std::string word = "";
         for (std::string str: list_of_strings_){
