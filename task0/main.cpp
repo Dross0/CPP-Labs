@@ -26,6 +26,9 @@ int main(int argc, char ** argv){
     }
     std::sort(words_array.begin(), words_array.end(), comp);
     WriterCsv writer(argv[2]);
+    writer.write("Word");
+    writer.write("Amount");
+    writer.writeln("Frequency");
     for (size_t i = 0; i < words_array.size(); ++i){
         writer.write(words_array[i].first);
         writer.write(std::to_string(words_array[i].second));
