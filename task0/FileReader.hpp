@@ -14,12 +14,11 @@ public:
         file_.close();
     }
 
-    std::string getLine() {
+    bool getLine(std::string & str) {
         if (file_.eof())
-            return "";
-        std::string str;
+            return false;
         getline(file_, str);
-        return str;
+        return true;
     }
 
     bool is_open() const{
