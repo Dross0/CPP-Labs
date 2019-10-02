@@ -27,6 +27,8 @@ public:
 
     explicit Trit(const int value);
 
+    ~Trit();
+
     Trit & operator=(const Trit & t);
 
     trit value() const;
@@ -61,6 +63,7 @@ public:
 private:
     trit value_;
 };
+
 
 std::ostream & operator<<(std::ostream & out, const Trit & t);
 

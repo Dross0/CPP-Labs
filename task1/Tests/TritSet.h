@@ -7,12 +7,12 @@
 
 #include <vector>
 #include <stdint.h>
-#include "Trit.h"
+#include "../Trit.h"
 
 
 class TritSet {
 public:
-    explicit TritSet(const size_t size);
+    explicit TritSet(size_t size = 0);
 
     TritSet(const TritSet & t);
 
@@ -50,7 +50,7 @@ public:
 
     TritSet & operator|=(const TritSet & t);
 
-    TritSet operator!() const;
+    TritSet operator~() const;
 
     size_t capacity() const;
 
@@ -60,11 +60,13 @@ public:
 
     void shrink();
 
-    size_t cardinality() const;
+    size_t cardinality(const Trit & t) const;
 
     void trim(size_t last_index);
+
+    void resize(size_t nsize);
 private:
-    size_t size_;
+    long long last_;
     std::vector<uint32_t> set_;
 };
 

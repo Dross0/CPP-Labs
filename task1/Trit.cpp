@@ -26,6 +26,8 @@ Trit::Trit(const int value){
         value_ = trit::FALSE;
 }
 
+Trit::~Trit() {}
+
 Trit & Trit::operator=(const Trit & t){
     value_ = t.value_;
     return *this;
@@ -63,6 +65,7 @@ bool Trit::operator!=(const bool & t) const{
 }
 
 Trit Trit::operator&(const Trit & t) const{
+    std::cout << "1: "<< *this << " 2: " << t << std::endl;
     if (value_ == trit::FALSE || t.value_ == trit::FALSE)
         return Trit(trit::FALSE);
     if (value_ == trit::UNKNOWN || t.value_ == trit::UNKNOWN)
