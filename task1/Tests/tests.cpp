@@ -76,13 +76,10 @@ TEST_F(Declaration, cardinality){
     obj[60] = Trit(trit::FALSE);
     obj[5] = Trit(trit::FALSE);
     obj[90] = Trit(trit::FALSE);
-    for (int i = 0; i <= 100; ++i){
-        std::cout << obj[i] << std::endl;
-    }
     ASSERT_EQ(Trit(obj[30]), Trit(true));
-    //ASSERT_EQ(obj.cardinality(Trit(trit::TRUE)), 3);
+    ASSERT_EQ(obj.cardinality(Trit(trit::TRUE)), 3);
     ASSERT_EQ(obj.cardinality(Trit(trit::FALSE)), 5);
-    ASSERT_EQ(obj.cardinality(Trit(trit::UNKNOWN)), 100 - 5 - 3);
+    ASSERT_EQ(obj.cardinality(Trit(trit::UNKNOWN)), 101 - 5 - 3);
 
 }
 

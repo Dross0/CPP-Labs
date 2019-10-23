@@ -162,7 +162,6 @@ size_t TritSet::length() const{
 size_t TritSet::cardinality(const Trit & t) const {
     size_t amount = 0;
     for (size_t i = 0; i <= last_; ++i){
-        //std::cout << (*this)[i] << std::endl;
         if ((*this)[i] == t){
             amount++;
         }
