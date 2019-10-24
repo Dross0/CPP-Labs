@@ -3,7 +3,7 @@
 //
 
 #include "BlockFactory.h"
-#include <exception>
+#include <stdexcept>
 
 BlockFactory& BlockFactory::instance() {
     static BlockFactory factory;
@@ -17,5 +17,5 @@ IWorker * BlockFactory::create(std::string& cmd, std::vector<std::string>& args,
     else if (cmd == "sort") return new Sort(data, args);
     else if (cmd == "dump") return new Dump(data, args);
     else if (cmd == "replace") return new Replace(data, args);
-    else throw new std::exception("Unrecognized command");
+    else throw std::runtime_error("Unrecognized command!");
 }

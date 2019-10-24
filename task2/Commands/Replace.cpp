@@ -4,10 +4,11 @@
 
 #include "Replace.h"
 #include <algorithm>
+#include <iostream>
 
 Replace::Replace(std::vector<std::string> &data, std::vector<std::string>& args) {
     if (args.size() != 2){
-        throw new std::exception("Wrong arguments for command <replace>!")
+        throw std::runtime_error("Wrong arguments for command <grep>!");
     }
     data_ = data;
     old_word = args[0];
@@ -17,7 +18,11 @@ Replace::Replace(std::vector<std::string> &data, std::vector<std::string>& args)
 std::vector<std::string> Replace::execute() {
     size_t lines_amount = data_.size();
     for (size_t i = 0; i < lines_amount; ++i){
-        std::replace(data_[i].begin(), data_[i].end(), old_word, new_word);
+        size_t pos = 0;
+        while ((pos = data_[i].find(old_word, pos)) != std::string::npos){
+            data_[i].replace(pos, old_word.size(), new_word);
+            pos += new_word.size();
+        }
     }
     return data_;
 }

@@ -4,13 +4,14 @@
 
 #include "ReadFile.h"
 
+
 ReadFile::ReadFile(std::vector<std::string>& args) {
     if (args.size() != 1){
-        throw new std::exception("Wrong arguments for command <fileread>!");
+        throw std::runtime_error("Wrong arguments for command <fileread>!");
     }
     file_.open(args[0]);
     if (!file_.is_open()){
-        throw new std::exception("Cant open file" + args[0] +"!");
+        throw std::runtime_error("Cant open file " + args[0] + "!");
     }
 }
 
@@ -20,9 +21,9 @@ ReadFile::~ReadFile(){
 
 std::vector<std::string> ReadFile::execute(){
     std::vector<std::string> result;
-    std::string str = "";
+    std::string str;
     while (getline(file_, str)){
-        str += '\n';
         result.push_back(str);
     }
+    return result;
 }

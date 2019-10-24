@@ -10,7 +10,7 @@
 class IWorker {
 public:
     virtual std::vector<std::string> execute() = 0;
-    virtual ~IWorker() = 0;
+    virtual ~IWorker() = default;
 };
 
 

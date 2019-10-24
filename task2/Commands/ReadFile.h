@@ -10,11 +10,11 @@
 
 class ReadFile : public IWorker {
 public:
-    ReadFile(std::vector<std::string>& args);
+    explicit ReadFile(std::vector<std::string>& args);
 
-    ~ReadFile();
+    ~ReadFile() override ;
 
-    std::vector<std::string> execute();
+    std::vector<std::string> execute() override ;
 private:
     std::ifstream file_;
 };

@@ -6,8 +6,8 @@
 #include <algorithm>
 
 Sort::Sort(std::vector<std::string> &data, std::vector<std::string> &args) {
-    if (args.size() != 0){
-        throw new std::exception("Wrong arguments for command <sort>!")
+    if (!args.empty()){
+        throw std::runtime_error("Wrong arguments for command <sort>>!");
     }
     data_ = data;
 }
