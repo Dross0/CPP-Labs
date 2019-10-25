@@ -3,13 +3,15 @@
 //
 
 #include "Grep.h"
+#include <utility>
+
 
 
 Grep::Grep(std::vector<std::string> &data, std::vector<std::string> &args) {
     if (args.size() != 1){
         throw std::runtime_error("Wrong arguments for command <grep>!");
     }
-    data_ = data;
+    data_ = std::move(data);
     word_ = args[0];
 }
 

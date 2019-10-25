@@ -4,13 +4,14 @@
 
 #include "Replace.h"
 #include <algorithm>
-#include <iostream>
+#include <utility>
+
 
 Replace::Replace(std::vector<std::string> &data, std::vector<std::string>& args) {
     if (args.size() != 2){
         throw std::runtime_error("Wrong arguments for command <grep>!");
     }
-    data_ = data;
+    data_ = std::move(data);
     old_word = args[0];
     new_word = args[1];
 }

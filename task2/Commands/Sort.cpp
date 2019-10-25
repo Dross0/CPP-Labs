@@ -4,12 +4,14 @@
 
 #include "Sort.h"
 #include <algorithm>
+#include <utility>
+
 
 Sort::Sort(std::vector<std::string> &data, std::vector<std::string> &args) {
     if (!args.empty()){
         throw std::runtime_error("Wrong arguments for command <sort>>!");
     }
-    data_ = data;
+    data_ = std::move(data);
 }
 
 std::vector<std::string> Sort::execute() {
