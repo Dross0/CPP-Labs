@@ -3,6 +3,9 @@
 //
 
 #include "ReadFile.h"
+#include "../BlockMaker.h"
+
+static BlockMaker<ReadFile> maker("readfile");
 
 
 ReadFile::ReadFile(std::vector<std::string>& args) {
@@ -19,7 +22,7 @@ ReadFile::~ReadFile(){
     file_.close();
 }
 
-std::vector<std::string> ReadFile::execute(){
+std::vector<std::string> ReadFile::execute(std::vector<std::string>& data){
     std::vector<std::string> result;
     std::string str;
     while (getline(file_, str)){

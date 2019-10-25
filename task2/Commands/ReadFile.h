@@ -14,7 +14,7 @@ public:
 
     ~ReadFile() override ;
 
-    std::vector<std::string> execute() override ;
+    std::vector<std::string> execute(std::vector<std::string>& data) override ;
 private:
     std::ifstream file_;
 };

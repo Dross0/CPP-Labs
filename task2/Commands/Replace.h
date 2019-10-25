@@ -9,11 +9,10 @@
 
 class Replace : public IWorker {
 public:
-    Replace(std::vector<std::string>& data, std::vector<std::string>& args);
+    explicit Replace(std::vector<std::string>& args);
 
-    std::vector<std::string> execute() override;
+    std::vector<std::string> execute(std::vector<std::string>& data) override;
 private:
-    std::vector<std::string> data_;
     std::string old_word;
     std::string new_word;
 };

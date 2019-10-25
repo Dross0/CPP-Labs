@@ -9,12 +9,10 @@
 
 class Sort : public IWorker {
 public:
-    Sort(std::vector<std::string>& data, std::vector<std::string>& args);
+    explicit Sort(std::vector<std::string>& args);
 
-    std::vector<std::string> execute() override ;
+    std::vector<std::string> execute(std::vector<std::string>& data) override ;
 
-private:
-    std::vector<std::string> data_;
 };
 
 

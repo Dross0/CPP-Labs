@@ -10,14 +10,13 @@
 
 class Dump : public IWorker {
 public:
-    Dump(std::vector<std::string>& data, std::vector<std::string>& args);
+    explicit Dump(std::vector<std::string>& args);
 
     ~Dump() override ;
 
-    std::vector<std::string> execute() override ;
+    std::vector<std::string> execute(std::vector<std::string>& data) override ;
 private:
     std::ofstream file_;
-    std::vector<std::string> data_;
 };
 
 

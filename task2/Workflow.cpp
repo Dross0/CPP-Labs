@@ -28,7 +28,8 @@ void Workflow::execute() {
         if (i >= 1 && i < (cmd_amount - 1) && (table[cmd_order[i]].first == "writefile" || table[cmd_order[i]].first == "readfile")){
             throw std::runtime_error("<readfile> or <writefile> in the middle of commands order!");
         }
-        IWorker * cmd = bf.create(table[cmd_order[i]].first, table[cmd_order[i]].second, data);
-        data = cmd->execute();
+        IWorker * cmd = bf.create(table[cmd_order[i]].first, table[cmd_order[i]].second);
+        data = cmd->execute(data);
+        delete cmd;
     }
 }

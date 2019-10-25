@@ -10,12 +10,18 @@ BlockFactory& BlockFactory::instance() {
     return factory;
 }
 
-IWorker * BlockFactory::create(std::string& cmd, std::vector<std::string>& args, std::vector<std::string>& data) const {
-    if (cmd == "readfile") return new ReadFile(args);
-    else if (cmd == "writefile") return new WriteFile(data, args);
-    else if (cmd == "grep") return new Grep(data, args);
-    else if (cmd == "sort") return new Sort(data, args);
-    else if (cmd == "dump") return new Dump(data, args);
-    else if (cmd == "replace") return new Replace(data, args);
-    else throw std::runtime_error("Unrecognized command!");
+IWorker * BlockFactory::create(std::string& cmd, std::vector<std::string>& args) const {
+    auto obj = makers_.find(cmd);
+    if (obj == makers_.end()) {
+        throw std::runtime_error("Unrecognized command!");
+    }
+    IBlockMaker * maker = obj->second;
+    return maker->create(args);
+}
+
+void BlockFactory::register_maker(const std::string& key, IBlockMaker * maker){
+    if (makers_.find(key) != makers_.end()){
+        throw std::runtime_error("Multiple makers for given key!");
+    }
+    makers_[key] = maker;
 }
