@@ -4,13 +4,16 @@
 
 #ifndef TASK3_IGAMEVIEW_H
 #define TASK3_IGAMEVIEW_H
-
+#include <map>
+#include <memory>
+#include <string>
+#include "IGamer.h"
 
 class IGameView {
+public:
     virtual ~IGameView() = default;
-    virtual void draw() = 0;
-    virtual void clear() = 0;
-
+    virtual void
+    draw(std::shared_ptr<IGamer> gamer, std::map<std::string, unsigned int> &stat, HIT_STATUS hit_status) const = 0;
 };
 
 
