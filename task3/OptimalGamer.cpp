@@ -12,13 +12,14 @@ HIT_STATUS OptimalGamer::get_hit(uint8_t row, uint8_t col) {
 }
 
 HIT_STATUS OptimalGamer::make_move(std::shared_ptr<IGamer> rival) {
-    static uint32_t row = 1;
-    static uint32_t col = 'a';
-    while (std::find(wrong_points_.begin(), wrong_points_.end(), std::make_pair(row, col)) != wrong_points_.end()){
-            col += 1;
-            row += col / ('j' + 1);
-            col = (col == 'j' + 1) ? 'a' : col;
-    }
+    std::default_random_engine generator;
+    generator.seed(time(nullptr));
+    std::uniform_int_distribution<int> distribution(0, 1000);
+    uint32_t row, col;
+    do {
+        row = 1 + distribution(generator) % 10;
+        col = 'a' + distribution(generator) % 10;
+    } while (std::find(wrong_points_.begin(), wrong_points_.end(), std::make_pair(row, col)) != wrong_points_.end());
     HIT_STATUS status = rival->get_hit(row, col);
     if (status == HIT_STATUS::MISS){
         hits_field_(row, col) = 3;

@@ -7,6 +7,7 @@
 #include <cstdint>
 #include "GameField.h"
 
+
 class IGamer {
 public:
     virtual ~IGamer() = default;
