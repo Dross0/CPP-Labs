@@ -3,9 +3,10 @@
 //
 
 #include "ConsoleView.h"
+#include <iostream>
 
 
-void ConsoleView::draw(std::shared_ptr<IGamer> gamer, std::map<std::string, unsigned int> &stat,
+void ConsoleView::draw(Game & game, std::map<std::string, unsigned int> &stat,
                        HIT_STATUS hit_status) const {
     switch (hit_status) {
         case HIT_STATUS::MISS:
@@ -19,9 +20,9 @@ void ConsoleView::draw(std::shared_ptr<IGamer> gamer, std::map<std::string, unsi
             break;
     }
     std::cout << "Your field:" << std::endl;
-    gamer->print_personal_field();
+    game.get_current_gamer_field().print();
     std::cout << "Your hits field:" << std::endl;
-    gamer->print_hits_field();
+    print_rival_field(game.get_rival_gamer_field());
     unsigned int total = stat["total_number"];
     std::cout << "Statistics: " << std::endl;
     std::cout << " Total - " << total << std::endl;
@@ -37,4 +38,21 @@ void ConsoleView::scroll(unsigned int number_of_lines) const {
     for (unsigned int i = 0; i < number_of_lines; ++i) {
         std::cout << std::endl;
     }
+}
+
+void ConsoleView::print_rival_field(const GameField &gf) const {
+    for (int row = 0; row < 10; ++row){
+        for (int col = 0; col < 10; ++col){
+            char symbol = '.';
+            if (gf(row + 1, col + 'a') == Cell_status::DAMAGED_SHIP){
+                symbol = 'X';
+            }
+            else if (gf(row + 1, col + 'a') == Cell_status::MISS){
+                symbol = 'o';
+            }
+            std::cout << symbol << ' ';
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
 }

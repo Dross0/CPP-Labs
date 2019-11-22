@@ -31,7 +31,9 @@ public:
 const option::Descriptor usage[] =
         {
                 {UNKNOWN, 0, "", "",option::Arg::None, "USAGE: example [options]\n\n""Options:" },
-                {HELP, 0,"", "help",option::Arg::None, "  --help  \tPrint usage and exit." },
+                {HELP, 0,"h", "help",option::Arg::None, "--help  \t--first(-f) {type} --second(-s) {type} --count(-c) {int}\n"
+                                                       "type = {random, optimal, console}\n"
+                                                       "console: Direction = {UP = 0, DOWN = 1, RIGHT = 2, LEFT = 3}." },
                 {GAMER1, 0, "f", "first", Arg::Required, ""},
                 {GAMER2, 0, "s", "second", Arg::Required, ""},
                 {ROUNDS, 0, "c", "count", Arg::Required, ""},

@@ -7,7 +7,7 @@
 GameField::GameField() {
     map_ = new uint8_t[10 * 10];
     for (size_t row = 0; row < 100; ++row){
-        map_[row] = 0;
+        map_[row] = Cell_status::CLEAR;
     }
 }
 
@@ -75,7 +75,7 @@ void GameField::place(int32_t row, int32_t col, Direction dir, uint8_t len) {
     tmp_row = row;
     uint8_t k = 0;
     while (k < len){
-        map_[tmp_row * 10 + tmp_col] = 1;
+        map_[tmp_row * 10 + tmp_col] = Cell_status::SHIP;
         if (right_left){
             tmp_col += inc;
         }
@@ -95,14 +95,14 @@ HIT_STATUS GameField::hit(int32_t row, int32_t col) {
     }
     size_t ships_amount = ships_.size();
     HIT_STATUS status = HIT_STATUS::MISS;
-    if (map_[row * 10 + col] > 1){
+    if (map_[row * 10 + col] != Cell_status::CLEAR && map_[row * 10 + col] != Cell_status::SHIP){
         return status;
     }
-    map_[row * 10 + col] = 3;
+    map_[row * 10 + col] = Cell_status::MISS;
     for (size_t i = 0; i < ships_amount; ++i){
         if (ships_[i].hit(row, col)) {
             status = (ships_[i].is_dead()) ? HIT_STATUS::KILL : HIT_STATUS::HIT;
-            map_[row * 10 + col] = 2;
+            map_[row * 10 + col] = Cell_status::DAMAGED_SHIP;
             break;
         }
     }
@@ -123,13 +123,13 @@ void GameField::print() const {
     for (int row = 0; row < 10; ++row){
         for (int col = 0; col < 10; ++col){
             char symbol = '.';
-            if (map_[row * 10 + col] == 1){
+            if (map_[row * 10 + col] == Cell_status::SHIP){
                 symbol = '@';
             }
-            else if (map_[row * 10 + col] == 2){
+            else if (map_[row * 10 + col] == Cell_status::DAMAGED_SHIP){
                 symbol = 'X';
             }
-            else if (map_[row * 10 + col] == 3){
+            else if (map_[row * 10 + col] == Cell_status::MISS){
                 symbol = 'o';
             }
             std::cout << symbol << ' ';
@@ -137,5 +137,14 @@ void GameField::print() const {
         std::cout << std::endl;
     }
     std::cout << std::endl;
+}
+
+void GameField::clear() {
+    for (uint8_t row = 0; row < 10; ++row){
+        for (uint8_t col = 0; col < 10; ++col){
+            map_[row * 10 + col] = Cell_status::CLEAR;
+        }
+    }
+    ships_.clear();
 }
 

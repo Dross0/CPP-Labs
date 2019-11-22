@@ -16,6 +16,13 @@ enum class HIT_STATUS : unsigned int{
     KILL
 };
 
+enum Cell_status{
+    CLEAR = 0,
+    SHIP,
+    DAMAGED_SHIP,
+    MISS,
+};
+
 class GameField {
 public:
     GameField();
@@ -33,6 +40,8 @@ public:
     int get_alive_ships_amount();
 
     void print() const;
+
+    void clear();
 private:
     uint8_t * map_;
     std::vector<Ship> ships_;

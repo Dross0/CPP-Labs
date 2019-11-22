@@ -6,17 +6,16 @@
 #define TASK3_IGAMER_H
 #include <cstdint>
 #include "GameField.h"
+#include "Game.h"
 
+class Game;
 
 class IGamer {
 public:
     virtual ~IGamer() = default;
-    virtual HIT_STATUS make_move(std::shared_ptr<IGamer> rival) = 0;
-    virtual HIT_STATUS get_hit(uint8_t row, uint8_t col) = 0;
-    virtual bool check_lose() = 0;
-    virtual void place_ships() = 0;
-    virtual void print_personal_field() = 0;
-    virtual void print_hits_field() = 0;
+    virtual std::pair<uint32_t, uint32_t > get_coordinates(Game & game) const = 0;
+    virtual void place_ships(Game & game) = 0;
+    virtual void add_point_to_wrong_points(uint32_t row, uint32_t col, HIT_STATUS hit_status, Game & game) = 0;
 };
 
 

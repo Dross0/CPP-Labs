@@ -2,7 +2,7 @@
 // Created by Андрей Гайдамака on 25.10.2019.
 //
 
-#include "ConsoleGamer.h"
+/*#include "ConsoleGamer.h"
 
 HIT_STATUS ConsoleGamer::make_move(std::shared_ptr<IGamer> rival) {
     uint32_t row = 0;
@@ -84,3 +84,4 @@ void ConsoleGamer::print_personal_field(){
 void ConsoleGamer::print_hits_field(){
     hits_field_.print();
 }
+ */

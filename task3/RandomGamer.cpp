@@ -4,42 +4,24 @@
 
 #include "RandomGamer.h"
 #include <random>
+#include <algorithm>
 
-HIT_STATUS RandomGamer::make_move(std::shared_ptr<IGamer> rival) {
-    std::default_random_engine generator;
-    generator.seed(time(nullptr));
+
+std::pair<uint32_t, uint32_t> RandomGamer::get_coordinates(Game &game) const {
+    std::random_device rd;
+    std::default_random_engine generator(rd());
     std::uniform_int_distribution<int> distribution(0, 1000);
-    uint8_t row, col;
+    uint32_t row, col;
     do {
         row = 1 + distribution(generator) % 10;
         col = 'a' + distribution(generator) % 10;
-    } while (hits_field_(row, col));
-
-    HIT_STATUS status = rival->get_hit(row, col);
-    if (status == HIT_STATUS::MISS){
-        hits_field_(row, col) = 3;
-    }
-    else if (status == HIT_STATUS::HIT){
-        hits_field_(row, col) = 2;
-    }
-    else if (status == HIT_STATUS::KILL){
-        hits_field_(row, col) = 2;
-    }
-    return status;
+    } while (std::find(wrong_points_.begin(), wrong_points_.end(), std::make_pair(row, col)) != wrong_points_.end());
+    return {row, col};
 }
 
-HIT_STATUS RandomGamer::get_hit(uint8_t row, uint8_t col) {
-    HIT_STATUS status = personal_.hit(row, col);
-    return status;
-}
-
-bool RandomGamer::check_lose() {
-    return 0 == personal_.get_alive_ships_amount();
-}
-
-void RandomGamer::place_ships() {
-    std::default_random_engine generator;
-    generator.seed(time(nullptr));
+void RandomGamer::place_ships(Game & game) {
+    std::random_device rd;
+    std::default_random_engine generator(rd());
     std::uniform_int_distribution<int> distribution(0, 1000);
     Direction dirs[] = {Direction::UP, Direction::DOWN, Direction::RIGHT, Direction::LEFT};
     for (uint8_t i = 0; i < 10; ++i){
@@ -48,16 +30,16 @@ void RandomGamer::place_ships() {
             uint8_t col = 'a' + distribution(generator) % 10;
             Direction dir = dirs[distribution(generator) % 4];
             if (i == 0){
-                personal_.place(row, col, dir, 4);
+                game.get_current_gamer_field().place(row, col, dir, 4);
             }
             else if (i >= 1 && i <= 2){
-                personal_.place(row, col, dir, 3);
+                game.get_current_gamer_field().place(row, col, dir, 3);
             }
             else if (i >= 3 && i <= 5){
-                personal_.place(row, col, dir, 2);
+                game.get_current_gamer_field().place(row, col, dir, 2);
             }
             else{
-                personal_.place(row, col, dir, 1);
+                game.get_current_gamer_field().place(row, col, dir, 1);
             }
         }
         catch (const std::runtime_error& error){
@@ -66,10 +48,7 @@ void RandomGamer::place_ships() {
     }
 }
 
-void RandomGamer::print_personal_field(){
-    personal_.print();
+void RandomGamer::add_point_to_wrong_points(uint32_t row, uint32_t col, HIT_STATUS hit_status, Game& game){
+    wrong_points_.emplace_back(row, col);
 }
 
-void RandomGamer::print_hits_field(){
-    hits_field_.print();
-}

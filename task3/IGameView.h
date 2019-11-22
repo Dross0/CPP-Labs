@@ -13,7 +13,7 @@ class IGameView {
 public:
     virtual ~IGameView() = default;
     virtual void
-    draw(std::shared_ptr<IGamer> gamer, std::map<std::string, unsigned int> &stat, HIT_STATUS hit_status) const = 0;
+    draw(Game& game, std::map<std::string, unsigned int> &stat, HIT_STATUS hit_status) const = 0;
 };
 
 
