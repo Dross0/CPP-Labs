@@ -2,43 +2,26 @@
 // Created by Андрей Гайдамака on 25.10.2019.
 //
 
-/*#include "ConsoleGamer.h"
+#include "ConsoleGamer.h"
+#include "Exceptions/PlacementError.h"
 
-HIT_STATUS ConsoleGamer::make_move(std::shared_ptr<IGamer> rival) {
+std::pair<uint32_t, uint32_t> ConsoleGamer::get_coordinates(Game & game) const {
     uint32_t row = 0;
     uint8_t col = 0;
     std::cout << "Введите координаты: " << std::endl << "Row: ";
     std::cin >> row;
     std::cout << "Col: ";
     std::cin >> col;
-    HIT_STATUS status = rival->get_hit(row, col);
-    if (status == HIT_STATUS::MISS){
-        hits_field_(row, col) = 3;
-    }
-    else if (status == HIT_STATUS::HIT){
-        hits_field_(row, col) = 2;
-    }
-    else if (status == HIT_STATUS::KILL){
-        hits_field_(row, col) = 2;
-    }
-    return status;
+    return {row, col};
 }
 
-HIT_STATUS ConsoleGamer::get_hit(uint8_t row, uint8_t col) {
-    HIT_STATUS status = personal_.hit(row, col);
-    return status;
-}
 
-bool ConsoleGamer::check_lose() {
-    return 0 == personal_.get_alive_ships_amount();
-}
-
-void ConsoleGamer::place_ships() {
+void ConsoleGamer::place_ships(Game & game) {
     Direction dirs[] = {Direction::UP, Direction::DOWN, Direction::RIGHT, Direction::LEFT};
     uint8_t ships[] = {4, 3, 2, 1};
     for (uint8_t i = 0; i < 10; ++i){
-        int row = 0;
-        uint8_t col = 0;
+        uint32_t row = 0;
+        unsigned char col = 0;
         int dir_index = 0;
         int len = 0;
         std::cout << "Введите координаты: " << std::endl << "Row: ";
@@ -66,22 +49,18 @@ void ConsoleGamer::place_ships() {
             continue;
         }
         try{
-            personal_.place(row, col, dirs[dir_index - 1], len);
+            game.get_current_gamer_field().place(row, col, dirs[dir_index - 1], len);
         }
-        catch (const std::runtime_error& error){
-            i--;
+        catch (const PlacementError& error){
             std::cout << error.what() << std::endl;
+            i--;
             continue;
         }
         ships[len-1]--;
     }
 }
 
-void ConsoleGamer::print_personal_field(){
-    personal_.print();
+void ConsoleGamer::add_point_to_wrong_points(uint32_t row, uint32_t col, HIT_STATUS hit_status, Game & game){
+    wrong_points_.emplace_back(row, col);
 }
 
-void ConsoleGamer::print_hits_field(){
-    hits_field_.print();
-}
- */

@@ -2,10 +2,11 @@
 // Created by Андрей Гайдамака on 25.10.2019.
 //
 
-/*#ifndef TASK3_CONSOLEGAMER_H
+#ifndef TASK3_CONSOLEGAMER_H
 #define TASK3_CONSOLEGAMER_H
 #include "IGamer.h"
 #include "GameField.h"
+#include <vector>
 
 class ConsoleGamer: public IGamer{
 public:
@@ -13,23 +14,14 @@ public:
 
     ~ConsoleGamer() override = default;
 
-    HIT_STATUS make_move(std::shared_ptr<IGamer> rival) override;
+    std::pair<uint32_t, uint32_t> get_coordinates(Game & game) const override;
 
-    HIT_STATUS get_hit(uint8_t row, uint8_t col) override;
+    void place_ships(Game & game) override;
 
-    void place_ships() override;
-
-    bool check_lose() override;
-
-    void print_personal_field() override;
-
-    void print_hits_field() override;
-
+    void add_point_to_wrong_points(uint32_t row, uint32_t col, HIT_STATUS hit_status, Game & game) override;
 private:
-    GameField personal_;
-    GameField hits_field_;
+    std::vector<std::pair<uint32_t, uint32_t >> wrong_points_;
 };
 
 
 #endif //TASK3_CONSOLEGAMER_H
-*/

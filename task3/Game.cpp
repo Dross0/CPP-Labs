@@ -90,7 +90,7 @@ std::shared_ptr<IGamer> Game::make_player(Gamer_type gamer_type) const {
             gamer = std::make_shared<RandomGamer>();
             break;
         case Gamer_type::CONSOLE_GAMER:
-            //gamer = std::make_shared<ConsoleGamer>();
+            gamer = std::make_shared<ConsoleGamer>();
             break;
         case Gamer_type::OPTIMAL_GAMER:
             gamer = std::make_shared<OptimalGamer>();
