@@ -1,9 +1,12 @@
 //
 // Created by Андрей Гайдамака on 25.10.2019.
 //
-
-#include "GameField.h"
 #include <iostream>
+#include "GameField.h"
+#include "Exceptions/CoordinatesError.h"
+#include "Exceptions/PlacementError.h"
+
+
 GameField::GameField() {
     map_ = new uint8_t[10 * 10];
     for (size_t row = 0; row < 100; ++row){
@@ -20,7 +23,7 @@ uint8_t& GameField::operator()(int32_t row, int32_t col) {
     col -= 'a';
     if (row >= 10 || row < 0 || col >= 10 || col < 0){
         std::cout << row << " " << col << std::endl;
-        throw std::invalid_argument("Wrong point!");
+        throw CoordinatesError("Wrong point!");
     }
     return map_[row * 10 + col];
 }
@@ -29,7 +32,7 @@ uint8_t GameField::operator()(int32_t row, int32_t col) const {
     row -= 1;
     col -= 'a';
     if (row >= 10 || row < 0 || col >= 10 || col < 0){
-        throw std::invalid_argument("Wrong point!");
+        throw CoordinatesError("Wrong point!");
     }
     return map_[row * 10 + col];
 }
@@ -38,18 +41,18 @@ void GameField::place(int32_t row, int32_t col, Direction dir, uint8_t len) {
     row -= 1;
     col -= 'a';
     if (row >= 10 || row < 0 || col >= 10 || col < 0){
-        throw std::invalid_argument("Wrong point!");
+        throw CoordinatesError("Wrong point!");
     }
     if ((dir == Direction::RIGHT && col + len - 1 > 9) || (dir == Direction::LEFT && col - len - 1 < 0)){
-            throw std::runtime_error("Cant place here!");  //change
+            throw PlacementError("Cant place here! (out of field)");
     }
     if ((dir == Direction::DOWN && row + len - 1 > 9) || (dir == Direction::UP && row - len - 1 < 0)){
-        throw std::runtime_error("Cant place here!");  //change
+        throw PlacementError("Cant place here! (out of field)");
     }
     size_t ships_amount = ships_.size();
     for (size_t k = 0; k < ships_amount; ++k){
         if (ships_[k].is_ship(row, col)){
-            throw std::runtime_error("Cant place here! (is ship)");  //change
+            throw PlacementError("Cant place here! (out of field) (So close to another ship)");
         }
     }
     int8_t inc = (dir == Direction::RIGHT || dir == Direction::DOWN) ? 1 : -1;
@@ -60,7 +63,7 @@ void GameField::place(int32_t row, int32_t col, Direction dir, uint8_t len) {
     while (l < len){
         for (auto ship: ships_){
             if (ship.inside_area(tmp_row, tmp_col)){
-                throw std::runtime_error("Cant place here! (So close)");
+                throw PlacementError("Cant place here! (out of field) (So close to another ship)");
             }
         }
         if (right_left){
@@ -91,7 +94,7 @@ HIT_STATUS GameField::hit(int32_t row, int32_t col) {
     row -= 1;
     col -= 'a';
     if (row >= 10 || row < 0 || col >= 10 || col < 0){
-        throw std::invalid_argument("Wrong point!");
+        throw CoordinatesError("Wrong point!");
     }
     size_t ships_amount = ships_.size();
     HIT_STATUS status = HIT_STATUS::MISS;

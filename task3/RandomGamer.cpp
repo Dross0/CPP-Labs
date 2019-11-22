@@ -3,6 +3,7 @@
 //
 
 #include "RandomGamer.h"
+#include "Exceptions/PlacementError.h"
 #include <random>
 #include <algorithm>
 
@@ -42,7 +43,7 @@ void RandomGamer::place_ships(Game & game) {
                 game.get_current_gamer_field().place(row, col, dir, 1);
             }
         }
-        catch (const std::runtime_error& error){
+        catch (const PlacementError& error){
             i--;
         }
     }

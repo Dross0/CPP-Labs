@@ -3,6 +3,7 @@
 //
 
 #include "OptimalGamer.h"
+#include "Exceptions/PlacementError.h"
 #include <algorithm>
 #include <random>
 
@@ -43,7 +44,7 @@ void OptimalGamer::place_ships(Game & game) {
                 game.get_current_gamer_field().place(row, col, dir, 1);
             }
         }
-        catch (const std::runtime_error& error){
+        catch (const PlacementError& error){
             i--;
         }
     }
