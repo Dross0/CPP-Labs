@@ -14,7 +14,7 @@ class TritSet {
 public:
     explicit TritSet(size_t size = 0);
 
-    TritSet(const TritSet & t);
+    TritSet(const TritSet & t) = default;
 
     TritSet & operator=(const TritSet & t);
 
@@ -27,10 +27,6 @@ public:
         reference & operator=(const reference & r);
 
         reference & operator=(const Trit & t);
-
-        void set_value(const Trit & t);
-
-        Trit get_value() const;
 
         operator Trit();
     private:
@@ -68,6 +64,10 @@ public:
 private:
     long long last_;
     std::vector<uint32_t> set_;
+
+    void set_value(const Trit & t, size_t i);
+
+    Trit get_value(size_t i) const;
 };
 
 
