@@ -9,6 +9,7 @@
 
 namespace error {
     class cant_open_file: public Base, public with_file_name{
+    public:
         void format_error_message() const override;
     };
 }

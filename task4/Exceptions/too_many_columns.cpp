@@ -1,0 +1,1 @@
+//// Created by Андрей Гайдамака on 08.12.2019.//#include "too_many_columns.h"#include <stdio.h>void error::too_many_columns::format_error_message(){    snprintf(error_message_buffer, sizeof(error_message_buffer), "Too many columns in line %d in file %s .", file_line, file_name);}

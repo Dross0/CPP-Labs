@@ -10,6 +10,7 @@
 
 namespace error {
     class line_length_limit_exceeded : public Base, public with_file_name, public with_file_line{
+    public:
         void format_error_message() const override;
     };
 }
