@@ -9,11 +9,7 @@
 
 class CSVStringParser {
 public:
-    explicit CSVStringParser(char delimiter);
-
-    std::vector<std::string> parse(const std::string& str);
-private:
-    char delimiter_;
+    static std::vector<std::string> parse(const std::string& str, char delimiter = ',');
 };
 
 

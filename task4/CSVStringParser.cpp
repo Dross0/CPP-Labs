@@ -4,19 +4,19 @@
 
 #include "CSVStringParser.h"
 
-CSVStringParser::CSVStringParser(char delimiter) : delimiter_(delimiter)
-{}
-
-std::vector<std::string> CSVStringParser::parse(const std::string& str) {
+std::vector<std::string> CSVStringParser::parse(const std::string& str, char delimiter) {
     std::vector<std::string> list_of_strings;
     std::string tmp;
     for (char symbol : str){
-        if (symbol == delimiter_){
+        if (symbol == delimiter){
             list_of_strings.push_back(tmp);
             tmp = "";
             continue;
         }
         tmp += symbol;
+    }
+    if (!tmp.empty()){
+        list_of_strings.push_back(tmp);
     }
     return list_of_strings;
 }

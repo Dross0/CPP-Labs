@@ -22,9 +22,7 @@ struct Print {
 
 template <class Ch, class Tr, class ...Args>
 struct Print<Ch, Tr, -1, Args...>{
-    static void print_tuple_element(std::basic_ostream<Ch, Tr> &os, std::tuple<Args...> const &t) {
-        return;
-    }
+    static void print_tuple_element(std::basic_ostream<Ch, Tr> &os, std::tuple<Args...> const &t) {}
 };
 
 
