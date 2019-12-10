@@ -39,7 +39,9 @@ public:
         return iterator(this, -1);
     }
 
-    ~CSVParser() = default;
+    ~CSVParser(){
+        file_.close();
+    };
 private:
 
 
