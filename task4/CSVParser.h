@@ -42,6 +42,10 @@ public:
     ~CSVParser(){
         file_.close();
     };
+
+    CSVParser(const CSVParser& csv_parser) = delete;
+
+    CSVParser& operator=(const CSVParser& csv_parser) = delete;
 private:
 
 
