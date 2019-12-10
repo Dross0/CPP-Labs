@@ -62,6 +62,7 @@ private:
         explicit iterator(CSVParser * cur, int file_line) : file_line_(file_line)
         {
             cur_obj_ = cur;
+            pos_ = 0;
             if (file_line != -1)
                 ++(*this);
         }
@@ -78,7 +79,12 @@ private:
             else if (file_line_ == -1){
                 throw std::runtime_error("Cant it.end()++");
             }
+            if (cur_obj_->file_.tellg() != pos_){
+                cur_obj_->file_.clear();
+                cur_obj_->file_.seekg(pos_, cur_obj_->file_.beg);
+            }
             std::string str = cur_obj_->get_next_line();
+            pos_ = cur_obj_->file_.tellg();
             ++file_line_;
             if (cur_obj_->file_.eof()){
                 file_line_ = -2;
@@ -104,6 +110,7 @@ private:
         int file_line_;
         std::tuple<Types...> t_;
         CSVParser * cur_obj_;
+        fpos_t pos_;
 
 
         void update_tuple(const std::string& str){
