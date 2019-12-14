@@ -6,12 +6,12 @@
 #define TASK2_IBLOCKMAKER_H
 #include <string>
 #include <vector>
-#include "Commands/IWorker.h"
+#include "Commands/ICommand.h"
 
 class IBlockMaker {
 public:
     virtual ~IBlockMaker() = default;
-    virtual IWorker * create(std::vector<std::string>& args) = 0;
+    virtual ICommand * create(std::vector<std::string>& args) = 0;
 };
 
 

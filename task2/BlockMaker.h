@@ -17,7 +17,7 @@ public:
         BlockFactory::instance().register_maker(key, this);
     }
 
-    virtual IWorker * create(std::vector<std::string>& args){
+    virtual ICommand * create(std::vector<std::string>& args){
         return new T(args);
     }
 };

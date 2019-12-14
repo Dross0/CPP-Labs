@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "Commands/IWorker.h"
+#include "Commands/ICommand.h"
 #include "Parser.h"
 #include "BlockFactory.h"
 

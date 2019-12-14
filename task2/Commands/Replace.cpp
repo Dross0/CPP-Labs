@@ -29,3 +29,7 @@ std::vector<std::string> Replace::execute(std::vector<std::string>& data) {
     }
     return data;
 }
+
+COMMAND_TYPE Replace::get_command_type() const noexcept {
+    return COMMAND_TYPE::PROCESSING;
+}

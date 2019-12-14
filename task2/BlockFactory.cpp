@@ -3,6 +3,8 @@
 //
 
 #include "BlockFactory.h"
+#include "Exceptions/unrecognized_command.h"
+#include "Exceptions/multiply_makers.h"
 #include <stdexcept>
 
 BlockFactory& BlockFactory::instance() {
@@ -10,10 +12,10 @@ BlockFactory& BlockFactory::instance() {
     return factory;
 }
 
-IWorker * BlockFactory::create(std::string& cmd, std::vector<std::string>& args) const {
+ICommand * BlockFactory::create(std::string& cmd, std::vector<std::string>& args) const {
     auto obj = makers_.find(cmd);
     if (obj == makers_.end()) {
-        throw std::runtime_error("Unrecognized command!");
+        throw error::unrecognized_command( "'"+ cmd  + "' is not a command");
     }
     IBlockMaker * maker = obj->second;
     return maker->create(args);
@@ -21,7 +23,7 @@ IWorker * BlockFactory::create(std::string& cmd, std::vector<std::string>& args)
 
 void BlockFactory::register_maker(const std::string& key, IBlockMaker * maker){
     if (makers_.find(key) != makers_.end()){
-        throw std::runtime_error("Multiple makers for given key!");
+        throw error::multiply_makers("Multiply makers for '" + key + "'");
     }
     makers_[key] = maker;
 }

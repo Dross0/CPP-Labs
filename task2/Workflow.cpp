@@ -3,6 +3,9 @@
 //
 
 #include "Workflow.h"
+#include "Exceptions/first_command_is_not_input.h"
+#include "Exceptions/last_command_is_not_output.h"
+#include "Exceptions/middle_command_is_not_processing.h"
 
 #include <utility>
 
@@ -16,19 +19,19 @@ void Workflow::execute() {
     std::map<unsigned int, std::pair<std::string, std::vector<std::string> > > table = par.get_id_table();
     std::vector<unsigned int> cmd_order = par.get_commands_order();
     BlockFactory bf = BlockFactory::instance();
-    if (table[cmd_order[0]].first != "readfile"){
-        throw std::runtime_error("First command is not <readfile>!");
-    }
     size_t cmd_amount = cmd_order.size();
-    if (table[cmd_order[cmd_amount - 1]].first != "writefile"){
-        throw std::runtime_error("Last command is not <writefile>!");
-    }
     std::vector<std::string> data;
     for (size_t i = 0; i < cmd_amount; ++i){
-        if (i >= 1 && i < (cmd_amount - 1) && (table[cmd_order[i]].first == "writefile" || table[cmd_order[i]].first == "readfile")){
-            throw std::runtime_error("<readfile> or <writefile> in the middle of commands order!");
+        ICommand * cmd = bf.create(table[cmd_order[i]].first, table[cmd_order[i]].second);
+        if (i == 0 && cmd->get_command_type() != COMMAND_TYPE::INPUT){
+            throw error::first_command_is_not_input("First command must be INPUT type");
         }
-        IWorker * cmd = bf.create(table[cmd_order[i]].first, table[cmd_order[i]].second);
+        else if (i == cmd_amount - 1 && cmd->get_command_type() != COMMAND_TYPE::OUTPUT){
+            throw error::last_command_is_not_output("Last command must be OUTPUT type");
+        }
+        else if (i > 0 && i < (cmd_amount - 1) && cmd->get_command_type() != COMMAND_TYPE::PROCESSING){
+            throw error::middle_command_is_not_processing("Middle command must be PROCESSING type");
+        }
         data = cmd->execute(data);
         delete cmd;
     }

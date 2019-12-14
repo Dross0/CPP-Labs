@@ -3,6 +3,11 @@
 //
 
 #include "Parser.h"
+#include "Exceptions/wrong_command_order.h"
+#include "Exceptions/cant_get_next_line.h"
+#include "Exceptions/missed_end_of_command_block.h"
+#include "Exceptions/missed_start_of_command_block.h"
+#include "Exceptions/wrong_command_format.h"
 #include <iostream>
 #include <cstdlib>
 #include <cctype>
@@ -25,18 +30,25 @@ void Parser::parse(){
     std::string str;
     while (getline(input_file_, str) && str != "desc");
     if (str != "desc"){
-        throw std::runtime_error("Wrong file structure");
+        throw error::missed_start_of_command_block("Missed 'desc'");
     }
     while (getline(input_file_, str) && str != "csed"){
-        size_t first_space  = str.find(' ');
-        size_t second_space = str.find(' ', first_space + 1);
-        if (first_space == std::string::npos || second_space == std::string::npos){
-            throw std::runtime_error("Wrong string format!");
+        size_t assigment_sign  = str.find('=');
+        if (assigment_sign == std::string::npos){
+            throw error::wrong_command_format("Wrong command format: '" + str + "'");
         }
-        id_table_[atoi((str.substr(0, first_space)).c_str())] = command_parse(str.substr(second_space + 1));
+        std::string cmd = str.substr(assigment_sign + 1);
+        trim(cmd);
+        if (cmd.empty()){
+            throw error::wrong_command_format("Empty command");
+        }
+        id_table_[atoi((str.substr(0, assigment_sign - 1)).c_str())] = command_parse(cmd);
+    }
+    if (str != "csed"){
+        throw error::missed_end_of_command_block("Missed 'csed' ");
     }
     if (!getline(input_file_, str)){
-        throw std::runtime_error("Cant read next line!");
+        throw error::cant_get_next_line("Cant read next line");
     }
     size_t str_size = str.size();
     std::string sub;
@@ -51,7 +63,7 @@ void Parser::parse(){
             sub = "";
         }
         else{
-            throw std::runtime_error("Wrong commands order!");
+            throw error::wrong_command_order("Wrong command order line format");
         }
     }
     if (!sub.empty()){
@@ -96,4 +108,24 @@ std::map<unsigned int, std::pair<std::string, std::vector<std::string> > > Parse
 
 std::vector<unsigned int> Parser::get_commands_order() const{
     return cmd_order;
+}
+
+void Parser::trim(std::string &str) const {
+    size_t first_no_space = 0;
+    size_t last_no_space = str.size() - 1;
+    while (first_no_space < str.size() && isspace(str[first_no_space])){
+        first_no_space++;
+    }
+    while (last_no_space >= 0 && isspace(str[last_no_space])){
+        last_no_space--;
+    }
+    if (last_no_space <= first_no_space){
+        str = "";
+    }
+    else if (first_no_space != 0) {
+        str.erase(0, first_no_space);
+    }
+    else if (last_no_space != str.size() - 1) {
+        str.erase(last_no_space + 1, str.size() - last_no_space);
+    }
 }

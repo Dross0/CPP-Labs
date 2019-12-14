@@ -30,3 +30,7 @@ std::vector<std::string> ReadFile::execute(std::vector<std::string>& data){
     }
     return result;
 }
+
+COMMAND_TYPE ReadFile::get_command_type() const noexcept {
+    return COMMAND_TYPE::INPUT;
+}

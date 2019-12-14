@@ -26,3 +26,7 @@ std::vector<std::string> Grep::execute(std::vector<std::string>& data) {
     }
     return res;
 }
+
+COMMAND_TYPE Grep::get_command_type() const noexcept {
+    return COMMAND_TYPE::PROCESSING;
+}

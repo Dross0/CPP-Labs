@@ -31,3 +31,7 @@ std::vector<std::string> WriteFile::execute(std::vector<std::string>& data) {
     std::vector<std::string> null;
     return null;
 }
+
+COMMAND_TYPE WriteFile::get_command_type() const noexcept {
+    return COMMAND_TYPE::OUTPUT;
+}

@@ -4,7 +4,6 @@
 
 #include "Sort.h"
 #include <algorithm>
-#include <utility>
 #include "../BlockMaker.h"
 
 static BlockMaker<Sort> maker("sort");
@@ -18,4 +17,8 @@ Sort::Sort(std::vector<std::string> &args) {
 std::vector<std::string> Sort::execute(std::vector<std::string>& data) {
     std::sort(data.begin(), data.end());
     return data;
+}
+
+COMMAND_TYPE Sort::get_command_type() const noexcept {
+    return COMMAND_TYPE::PROCESSING;
 }

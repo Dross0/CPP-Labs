@@ -28,6 +28,7 @@ private:
     std::vector<unsigned int> cmd_order;
 
     std::pair<std::string, std::vector<std::string> > command_parse(const std::string & str);
+    void trim(std::string& str) const;
 };
 
 #endif //TASK2_PARSER_H

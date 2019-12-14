@@ -29,3 +29,7 @@ std::vector<std::string> Dump::execute(std::vector<std::string>& data) {
     }
     return data;
 }
+
+COMMAND_TYPE Dump::get_command_type() const noexcept {
+    return COMMAND_TYPE::PROCESSING;
+}
