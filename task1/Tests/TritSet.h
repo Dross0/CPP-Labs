@@ -6,8 +6,8 @@
 #define TASK1_TRITSET_H
 
 #include <vector>
-#include <cstdint>
-#include "Trit.h"
+#include <stdint.h>
+#include "../Trit.h"
 
 
 class TritSet {
@@ -22,7 +22,7 @@ public:
 
     class reference{
     public:
-        friend class TritSet;
+        reference(TritSet *d, size_t i);
 
         reference & operator=(const reference & r);
 
@@ -32,8 +32,6 @@ public:
     private:
         TritSet * data_;
         size_t ind_;
-
-        reference(TritSet *d, size_t i);
     };
 
     Trit operator[](size_t i) const;

@@ -2,7 +2,7 @@
 // Created by Андрей Гайдамака on 13.09.2019.
 //
 
-#include "TritSet.h"
+#include "Tests/TritSet.h"
 
 const uint8_t TritSet::TRITS_IN_ONE_ELEMENT = 16;
 
@@ -76,7 +76,7 @@ TritSet::reference & TritSet::reference::operator=(const TritSet::reference &r) 
 
 TritSet & TritSet::operator&=(const TritSet & t){
     long long int len = t.length();
-    if (len > size()){
+    if (len > set_.size()){
         resize(len);
     }
     for (size_t i = 0; i < len; ++i){
@@ -96,7 +96,7 @@ TritSet TritSet::operator&(const TritSet & t) const{
 
 TritSet & TritSet::operator|=(const TritSet & t){
     long long int len = t.length();
-    if (len > size()){
+    if (len >= set_.size()){
         resize(len);
     }
     for (size_t i = 0; i < len; ++i){

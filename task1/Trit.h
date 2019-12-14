@@ -19,17 +19,17 @@ class Trit {
 public:
     Trit();
 
-    Trit(const Trit & t) = default;
+    Trit(const Trit & t);
 
-    explicit Trit(bool value);
+    explicit Trit(const bool value);
 
-    explicit Trit(trit value);
+    explicit Trit(const trit value);
 
-    explicit Trit(int value);
+    explicit Trit(const int value);
 
-    ~Trit() = default;
+    ~Trit();
 
-    Trit & operator=(const Trit & t) = default;
+    Trit & operator=(const Trit & t);
 
     trit value() const;
 

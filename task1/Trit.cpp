@@ -26,6 +26,12 @@ Trit::Trit(const int value){
         value_ = trit::FALSE;
 }
 
+Trit::~Trit() {}
+
+Trit & Trit::operator=(const Trit & t){
+    value_ = t.value_;
+    return *this;
+}
 
 trit Trit::value() const{
     return value_;
@@ -109,7 +115,6 @@ Trit::operator int(){
 Trit::operator bool(){
     return value_ == trit::TRUE;
 }
-
 
 std::ostream & operator<<(std::ostream & out, const Trit & t){
     trit val = t.value();
