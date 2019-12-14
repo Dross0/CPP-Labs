@@ -4,14 +4,12 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "TritSet.h"
+#include "../TritSet.h"
 
 class Declaration: public testing::Test{
 public:
     TritSet obj;
-    Declaration(){
-        obj;
-    }
+    Declaration() = default;
 };
 
 TEST_F(Declaration, Memory){

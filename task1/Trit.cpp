@@ -26,7 +26,6 @@ Trit::Trit(const int value){
         value_ = trit::FALSE;
 }
 
-Trit::~Trit() {}
 
 Trit & Trit::operator=(const Trit & t){
     value_ = t.value_;
