@@ -6,16 +6,18 @@
 #include <iostream>
 #include <utility>
 #include "../BlockMaker.h"
+#include "../Exceptions/wrong_arguments_amount.h"
+#include "../Exceptions/cant_open_file.h"
 
 static BlockMaker<WriteFile> maker("writefile");
 
 WriteFile::WriteFile(std::vector<std::string> &args) {
     if (args.size() != 1){
-        throw std::runtime_error("Wrong arguments for command <writefile>!");
+        throw error::wrong_arguments_amount("Wrong arguments for command <writefile>!");
     }
     file_.open(args[0]);
     if (!file_.is_open()){
-        throw std::runtime_error("Cant open file " + args[0] + "!");
+        throw error::cant_open_file("Cant open file " + args[0] + "!");
     }
 }
 

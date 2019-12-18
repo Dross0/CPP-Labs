@@ -5,13 +5,14 @@
 #include "Grep.h"
 #include <utility>
 #include "../BlockMaker.h"
+#include "../Exceptions/wrong_arguments_amount.h"
 
 static BlockMaker<Grep> maker("grep");
 
 
 Grep::Grep(std::vector<std::string> &args) {
     if (args.size() != 1){
-        throw std::runtime_error("Wrong arguments for command <grep>!");
+        throw error::wrong_arguments_amount("Wrong arguments for command <grep>!");
     }
     word_ = args[0];
 }

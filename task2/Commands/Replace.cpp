@@ -6,13 +6,14 @@
 #include <algorithm>
 #include <utility>
 #include "../BlockMaker.h"
+#include "../Exceptions/wrong_arguments_amount.h"
 
 static BlockMaker<Replace> maker("replace");
 
 
 Replace::Replace(std::vector<std::string>& args) {
     if (args.size() != 2){
-        throw std::runtime_error("Wrong arguments for command <grep>!");
+        throw error::wrong_arguments_amount("Wrong arguments for command <grep>!");
     }
     old_word = args[0];
     new_word = args[1];

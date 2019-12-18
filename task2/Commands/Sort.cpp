@@ -5,12 +5,13 @@
 #include "Sort.h"
 #include <algorithm>
 #include "../BlockMaker.h"
+#include "../Exceptions/wrong_arguments_amount.h"
 
 static BlockMaker<Sort> maker("sort");
 
 Sort::Sort(std::vector<std::string> &args) {
     if (!args.empty()){
-        throw std::runtime_error("Wrong arguments for command <sort>>!");
+        throw error::wrong_arguments_amount("Wrong arguments for command <sort>>!");
     }
 }
 
