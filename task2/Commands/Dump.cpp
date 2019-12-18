@@ -3,7 +3,6 @@
 //
 
 #include "Dump.h"
-#include <stdexcept>
 #include "../BlockMaker.h"
 #include "../Exceptions/wrong_arguments_amount.h"
 #include "../Exceptions/cant_open_file.h"
